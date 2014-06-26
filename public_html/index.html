@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .myclass {
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <a href="#/home/my-variable">Home</a> | 
+            <a href="#/another">another</a> | 
+            <a href="#/computer">computer</a>
+        </div>
+
+        <div id="home" class="myclass">Home</div>
+        <div id="another" class="myclass">Another</div>
+        <div id="computer" class="myclass">Computer</div>
+        
+        <script src="router.js"></script>
+        <script>
+            
+            // Very simplistic function to hide a bunch of div's by classname, and
+            // then show one by a particular ID that matches a hash. 
+            function action(hash) {
+                var classes = document.querySelectorAll('.myclass');
+                for (var i = 0; i < classes.length; i++) {
+                    classes[i].style.display = 'none';
+                }
+                document.querySelector('#' + hash.substring(1)).style.display = 'initial';
+            }
+
+            // Use our router to set up a bunch of routes (with and without variables),
+            // then set up a default route in case a user enters rubbish,
+            // and finally proceed to initialize the Router.
+            Router
+                    .go('/home', action)
+                    .go('/home/:myvar', function(hash, vars) {
+                        action('/home');
+                        console.log('You have access to your variable:', vars);
+                    })
+                    .go('/another', action)
+                    .go('/computer', action)
+                    .otherwise('/home')
+                    .run();
+
+        </script>
+    </body>
+</html>
